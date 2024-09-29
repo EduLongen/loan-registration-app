@@ -1,0 +1,87 @@
+<h2>Loan Registration</h2>
+
+<form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+  <!-- Client CPF Input -->
+  <div class="form-group">
+    <label for="cpf">Client CPF</label>
+    <input
+      id="cpf"
+      type="text"
+      class="form-control"
+      formControlName="cpf"
+      [ngClass]="{'is-invalid': isFieldInvalid('cpf')}"
+    />
+    <div *ngIf="isFieldInvalid('cpf')" class="invalid-feedback">
+      CPF is required.
+    </div>
+  </div>
+
+  <!-- Amount Input -->
+  <div class="form-group">
+    <label for="amount">Loan Amount</label>
+    <input
+      id="amount"
+      type="number"
+      class="form-control"
+      formControlName="amount"
+      [ngClass]="{'is-invalid': isFieldInvalid('amount')}"
+    />
+    <div *ngIf="isFieldInvalid('amount')" class="invalid-feedback">
+      Loan amount is required and must be a positive number.
+    </div>
+  </div>
+
+  <!-- Loan Date Input -->
+  <div class="form-group">
+    <label for="loanDate">Loan Date</label>
+    <input
+      id="loanDate"
+      type="date"
+      class="form-control"
+      formControlName="loanDate"
+      [ngClass]="{'is-invalid': isFieldInvalid('loanDate')}"
+    />
+    <div *ngIf="isFieldInvalid('loanDate')" class="invalid-feedback">
+      Loan date is required.
+    </div>
+  </div>
+
+  <!-- Due Date Input -->
+  <div class="form-group">
+    <label for="dueDate">Due Date</label>
+    <input
+      id="dueDate"
+      type="date"
+      class="form-control"
+      formControlName="dueDate"
+      [ngClass]="{'is-invalid': isFieldInvalid('dueDate')}"
+    />
+    <div *ngIf="isFieldInvalid('dueDate')" class="invalid-feedback">
+      Due date is required.
+    </div>
+  </div>
+
+  <!-- Currency Input -->
+  <div class="form-group">
+    <label for="currency">Currency</label>
+    <select
+      id="currency"
+      class="form-control"
+      formControlName="currency"
+      [ngClass]="{'is-invalid': isFieldInvalid('currency')}"
+    >
+      <option value="">Select currency</option>
+      <option value="USD">USD</option>
+      <option value="BRL">BRL</option>
+      <option value="EUR">EUR</option>
+    </select>
+    <div *ngIf="isFieldInvalid('currency')" class="invalid-feedback">
+      Currency is required.
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary" [disabled]="loanForm.invalid">
+    Register Loan
+  </button>
+</form>

@@ -1,0 +1,58 @@
+<h2>Client Registration</h2>
+
+<!-- Display success message -->
+<div *ngIf="successMessage" class="alert alert-success">
+  {{ successMessage }}
+</div>
+
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+  <!-- Name Input -->
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      id="name"
+      type="text"
+      class="form-control"
+      formControlName="name"
+      [ngClass]="{'is-invalid': isFieldInvalid('name')}"
+    />
+    <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
+      Name is required and must be at least 3 characters long.
+    </div>
+  </div>
+
+  <!-- Last Name Input -->
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input
+      id="lastName"
+      type="text"
+      class="form-control"
+      formControlName="lastName"
+      [ngClass]="{'is-invalid': isFieldInvalid('lastName')}"
+    />
+    <div *ngIf="isFieldInvalid('lastName')" class="invalid-feedback">
+      Last name is required and must be at least 3 characters long.
+    </div>
+  </div>
+
+  <!-- CPF Input -->
+  <div class="form-group">
+    <label for="cpf">CPF</label>
+    <input
+      id="cpf"
+      type="text"
+      class="form-control"
+      formControlName="cpf"
+      [ngClass]="{'is-invalid': isFieldInvalid('cpf')}"
+    />
+    <div *ngIf="isFieldInvalid('cpf')" class="invalid-feedback">
+      CPF is required and must be 11 digits.
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">
+    Register Client
+  </button>
+</form>
