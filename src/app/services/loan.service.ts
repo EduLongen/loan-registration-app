@@ -6,16 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoanService {
-  private apiUrl = 'http://localhost:8080/api/loans';  // Replace with your Spring Boot backend URL
+  private apiUrl = 'http://localhost:8080/api/loans';  // Your backend API
 
   constructor(private http: HttpClient) {}
 
-  // Method to register a loan, including CPF
+  // POST request for registering a new loan
   registerLoan(loanData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, loanData);
   }
 
-  // Method to fetch all loans (optional)
+  // GET request for fetching loans
   getLoans(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }

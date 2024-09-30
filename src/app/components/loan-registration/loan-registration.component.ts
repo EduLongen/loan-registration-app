@@ -2,52 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoanService } from '../../services/loan.service';
-import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-loan-registration',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule], 
   templateUrl: './loan-registration.component.html',
   styleUrls: ['./loan-registration.component.scss']
 })
 export class LoanRegistrationComponent implements OnInit {
   loanForm: FormGroup;
-  clients: any[] = [];
-  selectedClientCpf: string | null = null;  // Use CPF instead of ID
 
-  constructor(private fb: FormBuilder, private loanService: LoanService, private clientService: ClientService) {
+  constructor(private fb: FormBuilder, private loanService: LoanService) {
     this.loanForm = this.fb.group({
-      amount: ['', [Validators.required]],
+      cpf: ['', [Validators.required]], 
+      amount: ['', [Validators.required, Validators.min(1)]],
       loanDate: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
       currency: ['', [Validators.required]],
-      cpf: ['', [Validators.required]]  // CPF input field
     });
   }
 
-  ngOnInit(): void {
-    this.fetchClients();
-  }
-
-  fetchClients() {
-    this.clientService.getClients().subscribe({
-      next: (data) => {
-        this.clients = data;
-      },
-      error: (error) => {
-        console.error('Error fetching clients:', error);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit() {
-    if (this.loanForm.valid && this.selectedClientCpf) {
-      const loanData = {
-        ...this.loanForm.value,
-        cpf: this.selectedClientCpf // Send CPF instead of Client ID
-      };
-
+    if (this.loanForm.valid) {
+      const loanData = this.loanForm.value;
       this.loanService.registerLoan(loanData).subscribe({
         next: (response) => {
           console.log('Loan registered successfully:', response);
@@ -59,11 +39,6 @@ export class LoanRegistrationComponent implements OnInit {
     } else {
       this.loanForm.markAllAsTouched();
     }
-  }
-
-  onClientChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.selectedClientCpf = target.value ? target.value : null;
   }
 
   isFieldInvalid(field: string): boolean {
