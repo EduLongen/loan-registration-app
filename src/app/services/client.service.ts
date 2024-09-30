@@ -19,4 +19,10 @@ export class ClientService {
   getClients(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  deleteClient(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url, { responseType: 'text' }); // Specify 'text' response type here
+  }
+  
 }
