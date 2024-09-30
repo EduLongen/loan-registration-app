@@ -19,4 +19,8 @@ export class LoanService {
   getLoans(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  getAllLoans(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

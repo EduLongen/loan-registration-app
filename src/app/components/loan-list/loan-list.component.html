@@ -1,0 +1,25 @@
+<h2>Loan List</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Client Name</th>
+      <th>Client CPF</th>
+      <th>Loan ID</th>
+      <th>Amount</th>
+      <th>Currency</th>
+      <th>Loan Date</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let loan of loans">
+      <td>{{ loan.client.name }} {{ loan.client.lastName }}</td> <!-- Client Full Name -->
+      <td>{{ loan.client.cpf }}</td> <!-- Client CPF -->
+      <td>{{ loan.id }}</td> <!-- Loan ID -->
+      <td>{{ loan.amount }}</td> <!-- Amount -->
+      <td>{{ loan.currency }}</td> <!-- Currency -->
+      <td>{{ loan.loanDate | date:'shortDate' }}</td> <!-- Loan Date -->
+      <td>{{ loan.dueDate | date:'shortDate' }}</td> <!-- Due Date -->
+    </tr>
+  </tbody>
+</table>

@@ -1,39 +1,105 @@
+h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #333; /* Consistent grey for heading */
+}
+
 form {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
+  padding: 24px;
+  background-color: #f8f8f8; /* Light grey background for the form container */
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 100%; /* Ensure the form takes the full width of its container */
+  box-sizing: border-box; /* Ensure padding is accounted for within width */
+
+  .form-group {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+    }
+
+    input, select {
+      width: 100%; /* Make inputs and selects take the full width */
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 1px solid #ccc; /* Light grey border */
+      border-radius: 8px;
+      background-color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box; /* Ensure padding is included in width */
+
+      &:focus {
+        border-color: #0071e3; /* Apple's blue for focus */
+        outline: none;
+      }
+
+      &.is-invalid {
+        border-color: #dc3545; /* Red border for invalid input */
+      }
+    }
+
+    .invalid-feedback {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+
+  button[type='submit'] {
+    background-color: #0071e3; /* Apple blue for button */
+    color: white;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full-width button for consistency with input */
+
+    &:hover {
+      background-color: #005bb5; /* Darker blue for hover */
+    }
+
+    &:disabled {
+      background-color: #cccccc; /* Grey for disabled button */
+      cursor: not-allowed;
+    }
+  }
 }
 
-div {
-  margin-bottom: 10px;
+// Success message styling
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
 }
 
-label {
-  display: inline-block;
-  width: 120px;
-}
+// Responsive behavior
+@media (max-width: 768px) {
+  form {
+    padding: 16px;
+  }
 
-input, select {
-  width: calc(100% - 130px);
-  padding: 5px;
-}
+  input, select {
+    width: 100%; /* Ensure inputs and selects take full width on smaller screens */
+  }
 
-button {
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.error {
-  color: red;
-  font-size: 0.9em;
-}
-
-input.ng-touched.ng-invalid {
-  border: 1px solid red;
+  button[type='submit'] {
+    width: 100%; /* Full-width button on smaller screens */
+  }
 }
