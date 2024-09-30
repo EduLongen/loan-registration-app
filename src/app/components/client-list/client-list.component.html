@@ -1,0 +1,26 @@
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th>CPF</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.id }}</td>
+      <td>{{ client.name }}</td>
+      <td>{{ client.lastName }}</td>
+      <td>{{ client.cpf }}</td>
+      <td>
+        <button (click)="deleteClient(client.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
