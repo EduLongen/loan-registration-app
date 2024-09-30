@@ -1,5 +1,79 @@
+h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #333; // Dark grey heading color
+}
+
 .error-message {
-  color: red;
-  font-weight: bold;
-  margin-bottom: 10px;
+  color: #dc3545; // Red color for error text
+  font-size: 14px;
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid #dc3545; // Red border for error box
+  border-radius: 4px;
+  background-color: #ffe6e6; // Light red background for error message visibility
+}
+
+// Table styling
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+  color: #333; // Dark grey text color
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); // Light grey borders
+  }
+
+  th {
+    background-color: #f0f0f0; // Light grey background for table header
+    font-weight: 600;
+    color: #0071e3; // Apple's signature blue for table headers
+    text-transform: uppercase; // Uppercase for headers
+    font-size: 14px;
+  }
+
+  tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05); // Light grey hover effect
+  }
+
+  td {
+    font-size: 14px; // Smaller font size for table body
+  }
+
+  // Styling for delete buttons
+  button {
+    background-color: #0071e3; // Apple's blue for buttons
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #005bb5; // Darker blue for hover
+    }
+  }
+}
+
+// Responsive design for smaller screens
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+
+    th, td {
+      padding: 8px; // Smaller padding on mobile
+    }
+  }
+
+  button {
+    width: 100%; // Full-width buttons on mobile devices
+    margin-top: 8px;
+  }
 }
