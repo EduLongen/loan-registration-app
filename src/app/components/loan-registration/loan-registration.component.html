@@ -71,9 +71,9 @@
       [ngClass]="{'is-invalid': isFieldInvalid('currency')}"
     >
       <option value="">Select currency</option>
-      <option value="USD">USD</option>
-      <option value="BRL">BRL</option>
-      <option value="EUR">EUR</option>
+      <option *ngFor="let currency of currencies" [value]="currency.code">
+        {{ currency.code }} - {{ currency.name }}
+      </option>
     </select>
     <div *ngIf="isFieldInvalid('currency')" class="invalid-feedback">
       Currency is required.
