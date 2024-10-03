@@ -22,4 +22,9 @@ export class CurrencyService {
       params: { currencyCode, startDate, endDate }
     });
   }
+
+  // Fetch exchange rates to BRL for all currencies
+  getBRLConversionRates(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/to-brl`);
+  }
 }

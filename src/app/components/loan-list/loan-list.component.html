@@ -9,17 +9,25 @@
       <th>Currency</th>
       <th>Loan Date</th>
       <th>Due Date</th>
+      <th>Interest Rate</th>
+      <th>Total Amount</th>
+      <th>Exchange Rate to BRL</th> <!-- New Column -->
+      <th>Total in BRL</th>         <!-- New Column -->
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let loan of loans">
-      <td>{{ loan.client.name }} {{ loan.client.lastName }}</td> <!-- Client Full Name -->
-      <td>{{ loan.client.cpf }}</td> <!-- Client CPF -->
-      <td>{{ loan.id }}</td> <!-- Loan ID -->
-      <td>{{ loan.amount }}</td> <!-- Amount -->
-      <td>{{ loan.currency }}</td> <!-- Currency -->
-      <td>{{ loan.loanDate | date:'shortDate' }}</td> <!-- Loan Date -->
-      <td>{{ loan.dueDate | date:'shortDate' }}</td> <!-- Due Date -->
+      <td>{{ loan.client.name }} {{ loan.client.lastName }}</td>
+      <td>{{ loan.client.cpf }}</td>
+      <td>{{ loan.id }}</td>
+      <td>{{ loan.amount | number:'1.2-4' }}</td>
+      <td>{{ loan.currency }}</td>
+      <td>{{ loan.loanDate | date:'shortDate' }}</td>
+      <td>{{ loan.dueDate | date:'shortDate' }}</td>
+      <td>{{ loan.interestRate | number:'1.2-4' }}%</td>
+      <td>{{ loan.totalAmount | currency:getCurrencySymbol(loan.currency) }}</td>
+      <td>{{ loan.exchangeRateToBRL | number:'1.2-4' }} BRL</td> <!-- Display Exchange Rate -->
+      <td>{{ loan.totalInBRL | currency:'BRL' }}</td>             <!-- Display Total in BRL -->
     </tr>
   </tbody>
 </table>
