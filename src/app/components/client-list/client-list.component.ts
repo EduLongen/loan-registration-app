@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';  // <-- Import CommonModule for ngFor
+import { CommonModule } from '@angular/common';
 import { ClientService } from '../../services/client.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SuccessDialogComponent } from '../success-dialog/success-dialog.component';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-client-list',
-  standalone: true, // Indicates this is a standalone component
-  imports: [CommonModule],  // <-- Add CommonModule here for ngFor
+  standalone: true,
+  imports: [CommonModule, MatDialogModule, MatButtonModule],
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.scss']
 })
 
 export class ClientListComponent implements OnInit {
   clients: any[] = [];
-  errorMessage: string | null = null; // To store the error message
+  errorMessage: string | null = null;
 
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -26,7 +30,8 @@ export class ClientListComponent implements OnInit {
         this.clients = data;
       },
       error: (error) => {
-        console.error('Error fetching clients', error);
+        console.error('Erro ao buscar clientes', error);
+        this.openErrorDialog('Erro ao buscar clientes.');
       }
     });
   }
@@ -34,37 +39,46 @@ export class ClientListComponent implements OnInit {
   deleteClient(id: number): void {
     this.clientService.deleteClient(id).subscribe({
       next: () => {
-        console.log('Client deleted successfully');
-        this.loadClients();  // Refresh the list after deletion
-        this.errorMessage = null;  // Clear any previous error
+        console.log('Cliente excluído com sucesso');
+        this.openSuccessDialog('Cliente excluído com sucesso.');
+        this.loadClients();
+        this.errorMessage = null;
       },
       error: (error) => {
-        console.error('Full error response:', error);  // Log the full error for debugging
-        console.log('Error body:', error.error); // Log the error body
+        console.error('Resposta completa de erro:', error);
+        console.log('Corpo do erro:', error.error);
   
-        // Ensure the response is parsed correctly
+        let errorMessage = 'Ocorreu um erro inesperado ao excluir o cliente.';
+  
         if (error.status === 400 && error.error) {
           if (typeof error.error === 'string') {
             try {
-              const parsedError = JSON.parse(error.error);  // Try to parse it as JSON
-              this.errorMessage = parsedError.error || 'An unexpected error occurred.';
+              const parsedError = JSON.parse(error.error);
+              errorMessage = parsedError.error || 'Ocorreu um erro inesperado.';
             } catch (e) {
-              // If parsing fails, treat it as a plain string
-              this.errorMessage = error.error;
+              errorMessage = error.error;
             }
           } else if (error.error.error) {
-            // If it's already parsed as an object
-            this.errorMessage = error.error.error;
+            errorMessage = error.error.error;
           } else if (error.error.message) {
-            this.errorMessage = error.error.message;
-          } else {
-            this.errorMessage = 'An unexpected error occurred.';
+            errorMessage = error.error.message;
           }
-        } else {
-          this.errorMessage = 'An unexpected error occurred while deleting the client.';
         }
+  
+        this.openErrorDialog(errorMessage);
       }
     });
   }  
-   
+
+  openSuccessDialog(message: string): void {
+    this.dialog.open(SuccessDialogComponent, {
+      data: { successMessage: message }
+    });
+  }
+
+  openErrorDialog(message: string): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: { errorMessage: message }
+    });
+  }
 }

@@ -12,13 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class LoanListComponent implements OnInit {
   loans: any[] = [];
-  brlConversionRates: { [key: string]: number } = {};  // Store conversion rates to BRL
+  brlConversionRates: { [key: string]: number } = {};
 
   constructor(private loanService: LoanService, private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
     this.loadLoans();
-    this.loadBRLConversionRates();  // Load BRL conversion rates on component initialization
+    this.loadBRLConversionRates();
   }
 
   loadLoans() {
@@ -27,7 +27,7 @@ export class LoanListComponent implements OnInit {
         this.loans = data;
       },
       error: (error) => {
-        console.error('Error loading loans:', error);
+        console.error('Erro ao carregar empréstimos:', error);
       }
     });
   }
@@ -38,12 +38,11 @@ export class LoanListComponent implements OnInit {
         this.brlConversionRates = data;
       },
       error: (error) => {
-        console.error('Error loading BRL conversion rates:', error);
+        console.error('Erro ao carregar as taxas de conversão para BRL:', error);
       }
     });
   }
 
-  // Helper function to return the correct currency symbol based on the currency code
   getCurrencySymbol(currencyCode: string): string {
     switch (currencyCode) {
       case 'USD':
@@ -63,14 +62,12 @@ export class LoanListComponent implements OnInit {
     }
   }
 
-  // Calculate total amount in BRL using the conversion rates
   calculateTotalInBRL(totalAmount: number, currencyCode: string): number {
-    const conversionRate = this.brlConversionRates[currencyCode] || 1;  // Fallback to 1 if no rate is found
+    const conversionRate = this.brlConversionRates[currencyCode] || 1; 
     return totalAmount * conversionRate;
   }
 
-  // Get the exchange rate for a specific currency to BRL
   getExchangeRateToBRL(currencyCode: string): number {
-    return this.brlConversionRates[currencyCode] || 1;  // Fallback to 1 if no rate is found
+    return this.brlConversionRates[currencyCode] || 1; 
   }
 }

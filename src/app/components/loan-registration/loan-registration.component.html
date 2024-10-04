@@ -1,4 +1,4 @@
-<h2>Registro de Empréstimo</h2>
+<!-- <h2>Registro de Empréstimo</h2> -->
 
 <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
   <!-- CPF Input -->
@@ -9,7 +9,7 @@
       type="text"
       class="form-control"
       formControlName="cpf"
-      placeholder="Digite o CPF do cliente"
+      placeholder="Digite o CPF do cliente (somente números)"
       [ngClass]="{'is-invalid': isFieldInvalid('cpf')}"
     />
     <div *ngIf="isFieldInvalid('cpf')" class="invalid-feedback">
@@ -46,7 +46,7 @@
       [ngClass]="{'is-invalid': isFieldInvalid('interestRate')}"
     />
     <div *ngIf="isFieldInvalid('interestRate')" class="invalid-feedback">
-      A taxa de juros é obrigatória e deve estar entre 0 e 1.
+      A taxa de juros é obrigatória e deve estar entre 0 e 1. Taxa de 0.01 representa 1%.
     </div>
   </div>
 
