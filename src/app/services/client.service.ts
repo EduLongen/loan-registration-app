@@ -24,5 +24,10 @@ export class ClientService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url, { responseType: 'text' }); // Specify 'text' response type here
   }
+
+  updateClient(client: any): Observable<any> {
+    const url = `${this.apiUrl}/${client.id}`;  // Use the full API URL
+    return this.http.put(url, client);
+  }
   
 }

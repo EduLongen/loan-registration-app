@@ -1,9 +1,11 @@
 <!-- <h2>Lista de Clientes</h2> -->
 
+<!-- Show error message -->
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
 </div>
 
+<!-- Table displaying the list of clients -->
 <table class="styled-table">
   <thead>
     <tr>
@@ -21,8 +23,42 @@
       <td>{{ client.lastName }}</td>
       <td>{{ client.cpf }}</td>
       <td>
+        <button (click)="editClient(client)">Editar</button>
         <button (click)="deleteClient(client.id)">Excluir</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Form for updating client details -->
+<form [formGroup]="clientForm" *ngIf="selectedClient" (ngSubmit)="updateClient()">
+  <h3>Atualizar Cliente</h3>
+  
+  <input formControlName="id" type="hidden"> <!-- Hidden ID field -->
+
+  <div class="form-group">
+    <label for="name">Nome</label>
+    <input id="name" type="text" class="form-control" formControlName="name" placeholder="Digite o nome">
+    <div *ngIf="clientForm.get('name')?.invalid && clientForm.get('name')?.touched" class="error-message">
+      O nome é obrigatório e deve ter pelo menos 3 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Sobrenome</label>
+    <input id="lastName" type="text" class="form-control" formControlName="lastName" placeholder="Digite o sobrenome">
+    <div *ngIf="clientForm.get('lastName')?.invalid && clientForm.get('lastName')?.touched" class="error-message">
+      O sobrenome é obrigatório e deve ter pelo menos 3 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cpf">CPF</label>
+    <input id="cpf" type="text" class="form-control" formControlName="cpf" placeholder="Digite o CPF">
+    <div *ngIf="clientForm.get('cpf')?.invalid && clientForm.get('cpf')?.touched" class="error-message">
+      O CPF é obrigatório e deve conter 11 dígitos.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">Atualizar Cliente</button>
+</form>
