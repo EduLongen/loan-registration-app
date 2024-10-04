@@ -1,17 +1,17 @@
-<h2>Client List</h2>
+<!-- <h2>Lista de Clientes</h2> -->
 
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
 </div>
 
-<table>
+<table class="styled-table">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Last Name</th>
+      <th>Nome</th>
+      <th>Sobrenome</th>
       <th>CPF</th>
-      <th>Actions</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +21,7 @@
       <td>{{ client.lastName }}</td>
       <td>{{ client.cpf }}</td>
       <td>
-        <button (click)="deleteClient(client.id)">Delete</button>
+        <button (click)="deleteClient(client.id)">Excluir</button>
       </td>
     </tr>
   </tbody>

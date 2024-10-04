@@ -1,18 +1,19 @@
-<h2>Loan List</h2>
-<table>
+<!-- <h2>Lista de Empréstimos</h2> -->
+ 
+<table class="styled-table">
   <thead>
     <tr>
-      <th>Client Name</th>
-      <th>Client CPF</th>
-      <th>Loan ID</th>
-      <th>Amount</th>
-      <th>Currency</th>
-      <th>Loan Date</th>
-      <th>Due Date</th>
-      <th>Interest Rate</th>
-      <th>Total Amount</th>
-      <th>Exchange Rate to BRL</th> <!-- New Column -->
-      <th>Total in BRL</th>         <!-- New Column -->
+      <th>Cliente</th>
+      <th>CPF</th>
+      <th>ID do Empréstimo</th>
+      <th>Valor</th>
+      <th>Moeda</th>
+      <th>Data do Empréstimo</th>
+      <th>Data de Vencimento</th>
+      <th>Taxa de Juros</th>
+      <th>Valor Total</th>
+      <th>Taxa de Conversão para BRL</th>
+      <th>Total em BRL</th>
     </tr>
   </thead>
   <tbody>
@@ -26,8 +27,8 @@
       <td>{{ loan.dueDate | date:'shortDate' }}</td>
       <td>{{ loan.interestRate | number:'1.2-4' }}%</td>
       <td>{{ loan.totalAmount | currency:getCurrencySymbol(loan.currency) }}</td>
-      <td>{{ loan.exchangeRateToBRL | number:'1.2-4' }} BRL</td> <!-- Display Exchange Rate -->
-      <td>{{ loan.totalInBRL | currency:'BRL' }}</td>             <!-- Display Total in BRL -->
+      <td>{{ loan.exchangeRateToBRL | number:'1.2-4' }} BRL</td>
+      <td>{{ loan.totalInBRL | currency:'BRL' }}</td>
     </tr>
   </tbody>
 </table>

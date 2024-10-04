@@ -1,38 +1,35 @@
-<h2>Client Registration</h2>
-
-<!-- Display success message -->
-<div *ngIf="successMessage" class="alert alert-success">
-  {{ successMessage }}
-</div>
+<!-- <h2>Cadastro de Cliente</h2> -->
 
 <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-  <!-- Name Input -->
+  <!-- Nome Input -->
   <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">Nome</label>
     <input
       id="name"
       type="text"
       class="form-control"
       formControlName="name"
+      placeholder="Digite o nome"
       [ngClass]="{'is-invalid': isFieldInvalid('name')}"
     />
     <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
-      Name is required and must be at least 3 characters long.
+      O nome é obrigatório e deve ter pelo menos 3 caracteres.
     </div>
   </div>
 
-  <!-- Last Name Input -->
+  <!-- Sobrenome Input -->
   <div class="form-group">
-    <label for="lastName">Last Name</label>
+    <label for="lastName">Sobrenome</label>
     <input
       id="lastName"
       type="text"
       class="form-control"
       formControlName="lastName"
+      placeholder="Digite o sobrenome"
       [ngClass]="{'is-invalid': isFieldInvalid('lastName')}"
     />
     <div *ngIf="isFieldInvalid('lastName')" class="invalid-feedback">
-      Last name is required and must be at least 3 characters long.
+      O sobrenome é obrigatório e deve ter pelo menos 3 caracteres.
     </div>
   </div>
 
@@ -44,15 +41,16 @@
       type="text"
       class="form-control"
       formControlName="cpf"
+      placeholder="Digite o CPF (somente números)"
       [ngClass]="{'is-invalid': isFieldInvalid('cpf')}"
     />
     <div *ngIf="isFieldInvalid('cpf')" class="invalid-feedback">
-      CPF is required and must be 11 digits.
+      O CPF é obrigatório e deve conter 11 dígitos.
     </div>
   </div>
 
-  <!-- Submit Button -->
+  <!-- Botão de Enviar -->
   <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">
-    Register Client
+    Registrar Cliente
   </button>
 </form>

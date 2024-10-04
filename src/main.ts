@@ -6,6 +6,7 @@ import { ClientRegistrationComponent } from './app/components/client-registratio
 import { LoanRegistrationComponent } from './app/components/loan-registration/loan-registration.component';
 import { ClientListComponent } from './app/components/client-list/client-list.component';
 import { LoanListComponent } from './app/components/loan-list/loan-list.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const routes: Routes = [
   { path: 'client-registration', component: ClientRegistrationComponent },
@@ -19,6 +20,6 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient()  // Use provideHttpClient instead of HttpClientModule
+    provideHttpClient(), provideAnimationsAsync()  // Use provideHttpClient instead of HttpClientModule
   ]
 });
