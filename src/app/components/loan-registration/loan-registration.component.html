@@ -1,87 +1,108 @@
-<h2>Loan Registration</h2>
+<!-- <h2>Registro de Empréstimo</h2> -->
 
 <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
   <!-- CPF Input -->
   <div class="form-group">
-    <label for="cpf">Client CPF</label>
+    <label for="cpf">CPF do Cliente</label>
     <input
       id="cpf"
       type="text"
       class="form-control"
       formControlName="cpf"
+      placeholder="Digite o CPF do cliente (somente números)"
       [ngClass]="{'is-invalid': isFieldInvalid('cpf')}"
     />
     <div *ngIf="isFieldInvalid('cpf')" class="invalid-feedback">
-      CPF is required.
+      O CPF é obrigatório e deve conter 11 dígitos.
     </div>
   </div>
 
   <!-- Amount Input -->
   <div class="form-group">
-    <label for="amount">Loan Amount</label>
+    <label for="amount">Valor do Empréstimo</label>
     <input
       id="amount"
       type="number"
       class="form-control"
       formControlName="amount"
+      placeholder="Digite o valor do empréstimo"
       [ngClass]="{'is-invalid': isFieldInvalid('amount')}"
     />
     <div *ngIf="isFieldInvalid('amount')" class="invalid-feedback">
-      Loan amount is required and must be a positive number.
+      O valor do empréstimo é obrigatório e deve ser maior que 0.
+    </div>
+  </div>
+
+  <!-- Interest Rate Input -->
+  <div class="form-group">
+    <label for="interestRate">Taxa de Juros (mensal %)</label>
+    <input
+      id="interestRate"
+      type="number"
+      step="0.01"
+      class="form-control"
+      formControlName="interestRate"
+      placeholder="Digite a taxa de juros (0 a 1)"
+      [ngClass]="{'is-invalid': isFieldInvalid('interestRate')}"
+    />
+    <div *ngIf="isFieldInvalid('interestRate')" class="invalid-feedback">
+      A taxa de juros é obrigatória e deve estar entre 0 e 1. Taxa de 0.01 representa 1%.
     </div>
   </div>
 
   <!-- Loan Date Input -->
   <div class="form-group">
-    <label for="loanDate">Loan Date</label>
+    <label for="loanDate">Data do Empréstimo</label>
     <input
       id="loanDate"
       type="date"
       class="form-control"
       formControlName="loanDate"
+      placeholder="Escolha a data do empréstimo"
       [ngClass]="{'is-invalid': isFieldInvalid('loanDate')}"
     />
     <div *ngIf="isFieldInvalid('loanDate')" class="invalid-feedback">
-      Loan date is required.
+      A data do empréstimo é obrigatória.
     </div>
   </div>
 
   <!-- Due Date Input -->
   <div class="form-group">
-    <label for="dueDate">Due Date</label>
+    <label for="dueDate">Data de Vencimento</label>
     <input
       id="dueDate"
       type="date"
       class="form-control"
       formControlName="dueDate"
+      placeholder="Escolha a data de vencimento"
       [ngClass]="{'is-invalid': isFieldInvalid('dueDate')}"
     />
     <div *ngIf="isFieldInvalid('dueDate')" class="invalid-feedback">
-      Due date is required.
+      A data de vencimento é obrigatória.
     </div>
   </div>
 
   <!-- Currency Input -->
   <div class="form-group">
-    <label for="currency">Currency</label>
+    <label for="currency">Moeda</label>
     <select
       id="currency"
       class="form-control"
       formControlName="currency"
       [ngClass]="{'is-invalid': isFieldInvalid('currency')}"
     >
-      <option value="">Select currency</option>
-      <option value="USD">USD</option>
-      <option value="BRL">BRL</option>
-      <option value="EUR">EUR</option>
+      <option value="">Selecione a moeda</option>
+      <option *ngFor="let currency of currencies" [value]="currency.code">
+        {{ currency.code }} - {{ currency.name }}
+      </option>
     </select>
     <div *ngIf="isFieldInvalid('currency')" class="invalid-feedback">
-      Currency is required.
+      A moeda é obrigatória.
     </div>
   </div>
 
   <!-- Submit Button -->
   <button type="submit" class="btn btn-primary" [disabled]="loanForm.invalid">
-    Register Loan
+    Registrar Empréstimo
   </button>
 </form>

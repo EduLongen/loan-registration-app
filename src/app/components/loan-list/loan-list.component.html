@@ -1,0 +1,34 @@
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>CPF</th>
+      <th>ID do Empréstimo</th>
+      <th>Valor</th>
+      <th>Moeda</th>
+      <th>Data do Empréstimo</th>
+      <th>Data de Vencimento</th>
+      <th>Meses de Pagamento</th> <!-- New column for months -->
+      <th>Taxa de Juros</th>
+      <th>Valor Total</th>
+      <th>Taxa de Conversão para BRL</th>
+      <th>Total em BRL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let loan of loans">
+      <td>{{ loan.client.name }} {{ loan.client.lastName }}</td>
+      <td>{{ loan.client.cpf }}</td>
+      <td>{{ loan.id }}</td>
+      <td>{{ loan.amount | number:'1.2-4' }}</td>
+      <td>{{ loan.currency }}</td>
+      <td>{{ loan.loanDate | date:'shortDate' }}</td>
+      <td>{{ loan.dueDate | date:'shortDate' }}</td>
+      <td>{{ loan.months }} meses</td> <!-- Display number of months -->
+      <td>{{ loan.interestRate | number:'1.2-4' }}%</td>
+      <td>{{ loan.totalAmount | currency:getCurrencySymbol(loan.currency) }}</td>
+      <td>{{ loan.exchangeRateToBRL | number:'1.2-4' }} BRL</td>
+      <td>{{ loan.totalInBRL | currency:'BRL' }}</td>
+    </tr>
+  </tbody>
+</table>
