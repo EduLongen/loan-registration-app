@@ -5,11 +5,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '../success-dialog/success-dialog.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.scss']
 })
@@ -17,8 +18,21 @@ import { MatButtonModule } from '@angular/material/button';
 export class ClientListComponent implements OnInit {
   clients: any[] = [];
   errorMessage: string | null = null;
+  clientForm: FormGroup; // <-- FormGroup for updating client
+  selectedClient: any = null; // <-- Store the selected client for update
 
-  constructor(private clientService: ClientService, private dialog: MatDialog) {}
+  constructor(
+    private clientService: ClientService,
+    private dialog: MatDialog,
+    private fb: FormBuilder // <-- Inject FormBuilder for the form
+  ) {
+    this.clientForm = this.fb.group({
+      id: [''], // <-- Hidden input for the client ID
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]]
+    });
+  }
 
   ngOnInit(): void {
     this.loadClients();
@@ -39,36 +53,48 @@ export class ClientListComponent implements OnInit {
   deleteClient(id: number): void {
     this.clientService.deleteClient(id).subscribe({
       next: () => {
-        console.log('Cliente excluído com sucesso');
         this.openSuccessDialog('Cliente excluído com sucesso.');
         this.loadClients();
         this.errorMessage = null;
       },
       error: (error) => {
-        console.error('Resposta completa de erro:', error);
-        console.log('Corpo do erro:', error.error);
-  
-        let errorMessage = 'Ocorreu um erro inesperado ao excluir o cliente.';
-  
-        if (error.status === 400 && error.error) {
-          if (typeof error.error === 'string') {
-            try {
-              const parsedError = JSON.parse(error.error);
-              errorMessage = parsedError.error || 'Ocorreu um erro inesperado.';
-            } catch (e) {
-              errorMessage = error.error;
-            }
-          } else if (error.error.error) {
-            errorMessage = error.error.error;
-          } else if (error.error.message) {
-            errorMessage = error.error.message;
-          }
-        }
-  
-        this.openErrorDialog(errorMessage);
+        console.error('Erro ao excluir cliente:', error);
+        this.openErrorDialog('Erro ao excluir cliente.');
       }
     });
-  }  
+  }
+
+  // Function to load the selected client's data into the form for editing
+  editClient(client: any): void {
+    this.selectedClient = client;
+    this.clientForm.patchValue({
+      id: client.id,
+      name: client.name,
+      lastName: client.lastName,
+      cpf: client.cpf
+    });
+  }
+
+  // Function to update the client with the new form values
+  updateClient(): void {
+    if (this.clientForm.valid) {
+      const updatedClient = this.clientForm.value;
+      this.clientService.updateClient(updatedClient).subscribe({
+        next: () => {
+          this.openSuccessDialog('Cliente atualizado com sucesso.');
+          this.loadClients();
+          this.clientForm.reset(); // Reset the form after updating
+          this.selectedClient = null; // Clear selected client
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar cliente:', error);
+          this.openErrorDialog('Erro ao atualizar cliente.');
+        }
+      });
+    } else {
+      this.clientForm.markAllAsTouched();
+    }
+  }
 
   openSuccessDialog(message: string): void {
     this.dialog.open(SuccessDialogComponent, {
